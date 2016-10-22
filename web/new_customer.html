@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Titan Online Banking Application::Register</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <h1>Titan Online Banking Application</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Log In</a></li>
+                <li><a href="new_customer.html">Register</a></li>
+                <li><a href="account_activity.html">Account Activity</a></li>
+            </ul>
+        </nav>
+        <section>
+            <p></p>
+			<form method="post" action="newCustomer">
+			<label>First Name:</label>
+                        <input type="text" name="firstName" required><br>
+			<label>Last Name:</label>
+                        <input type="text" name="lastName" required><br>
+			<label>Phone:</label>
+                        <input type="tel" name="phone" required><br>
+                        <label>Address:</label>
+                        <input type="text" name="address" required><br>
+                        <label>City:</label>
+                        <input type="text" name="city" required><br>
+                        <label>State:</label>
+                        <input type="text" name="state" required><br>
+                        <label>Zip Code:</label><br>
+                        <input type="text" name="zip_code"><br>
+                        <label>E-mail:</label>
+                        <input type="email" name="email" required><br>
+                        
+                        <input type="submit" value="Submit">
+			</form>
+	</section>
+
+    </body>
+</html>
