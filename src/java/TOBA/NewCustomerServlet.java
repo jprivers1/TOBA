@@ -44,19 +44,20 @@ public class NewCustomerServlet extends HttpServlet {
         
         String message;
         
-        if(firstName == null || lastName == null || phone == null || address == null || city == null || state == null || zip_code == null || email == null){
-                //|| firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || state.isEmpty() || zip_code.isEmpty() || email.isEmpty()){
+        if(firstName == null || lastName == null || phone == null || address == null || city == null || state == null || zip_code == null || email == null
+                || firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || state.isEmpty() || zip_code.isEmpty() || email.isEmpty()){
                 
-                message = "Please fill out all fields";
-                url = "/new_customer";
+                message = "***Please fill out all fields***";
+                url = "/new_customer.jsp";
             
         }else{
             message = "";
             url = "/success.html";
-        }
-//May need to convert to .jsp    
+        }  
         
-            getServletContext()
+        request.setAttribute("message", message);
+           
+        getServletContext()
                     .getRequestDispatcher(url)
                     .forward(request, response);
     }
