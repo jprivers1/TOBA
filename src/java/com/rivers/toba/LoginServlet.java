@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TOBA;
+package com.rivers.toba;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         if (userName.equals("jsmith@toba.com") && password.equals("letmein")){
-            url = "/account_activity.html";
+            url = "/account_activity.jsp";
             
             getServletContext()
                     .getRequestDispatcher(url)

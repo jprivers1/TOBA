@@ -2,19 +2,27 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>TOBA.LoginServlet</servlet-class>
+        <servlet-class>com.rivers.toba.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PasswordResetServlet</servlet-name>
+        <servlet-class>com.rivers.toba.PasswordResetServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewCustomerServlet</servlet-name>
-        <servlet-class>TOBA.NewCustomerServlet</servlet-class>
+        <servlet-class>com.rivers.toba.NewCustomerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TransactionServlet</servlet-name>
-        <servlet-class>TOBA.TransactionServlet</servlet-class>
+        <servlet-class>com.rivers.toba.TransactionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordResetServlet</servlet-name>
+        <url-pattern>/passwordReset</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NewCustomerServlet</servlet-name>
@@ -29,7 +37,6 @@
             30
         </session-timeout>
     </session-config>
-    
     <error-page>
         <error-code>404</error-code>
         <location>/error_404.jsp</location>

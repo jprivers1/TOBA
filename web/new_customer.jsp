@@ -5,25 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Titan Online Banking Application::Register</title>
-    </head>
-    
-    <body>
-        <header>
-            <h1>Titan Online Banking Application</h1>
-        </header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Log In</a></li>
-                <li><a href="new_customer.jsp">Register</a></li>
-                <li><a href="account_activity.html">Account Activity</a></li>
-            </ul>
-        </nav>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <c:import url="/includes/header.html"/>
         <section>
             <p>${message}</p>
 			<form method="post" action="newCustomer">
@@ -48,5 +31,4 @@
 			</form>
 	</section>
 
-    </body>
-</html>
+            <c:import url="/includes/footer.jsp"/>
