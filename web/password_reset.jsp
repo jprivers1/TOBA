@@ -9,11 +9,9 @@
         <c:import url="/includes/header.html"/>
         
         <form method="post" action="passwordReset">
-            <label>Current Password: </label>
-            <label>${user.password}</label><br>
             
-            <label>New Password: </label>
-            <input type="text" name="newPassword" value=""><br> 
+            <label>Password: </label>
+            <input type="text" name="newPassword" value=${user.password}><br> 
             
             <input type="submit" value="Submit">
         </form>

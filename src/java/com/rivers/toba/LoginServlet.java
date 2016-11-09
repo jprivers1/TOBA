@@ -5,12 +5,14 @@
  */
 package com.rivers.toba;
 
+import com.rivers.toba.user.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,11 +33,19 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String url;
         
+        
         String action = request.getParameter("action");
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         
-        if (userName.equals("jsmith@toba.com") && password.equals("letmein")){
+        HttpSession session = request.getSession();           
+        User user = (User)session.getAttribute("user");
+        
+        
+        
+      
+        
+        if (userName.equals(user.getUsername()) && password.equals(user.getPassword())){
             url = "/account_activity.jsp";
             
             getServletContext()

@@ -52,12 +52,6 @@ public class NewCustomerServlet extends HttpServlet {
         String username = lastName + zipCode;    
         String password = "welcome1";
         
-        //Create user object with data from form
-        User user = new User(firstName, lastName, phone, address, city, state, zipCode, email, username, password);
-        
-        //Request session and add user to it
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
         
         //Check if all fields on form are filled out
         if(firstName == null || lastName == null || phone == null || address == null || city == null || state == null || zipCode == null || email == null
@@ -67,6 +61,13 @@ public class NewCustomerServlet extends HttpServlet {
                 url = "/new_customer.jsp";
             
         }else{
+            //Create user object with data from form
+            User user = new User(firstName, lastName, phone, address, city, state, zipCode, email, username, password);
+        
+            //Request session and add user to it
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+           
             message = "";
             url = "/success.jsp";
         }  
