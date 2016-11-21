@@ -5,11 +5,24 @@
  */
 package com.rivers.toba.user;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author jpriv
  */
-public class User {
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int userId;
     private String firstName;
     private String lastName;
     private String phone;
@@ -125,6 +138,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
     
     

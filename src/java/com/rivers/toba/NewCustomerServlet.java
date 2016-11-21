@@ -5,6 +5,9 @@
  */
 package com.rivers.toba;
 
+import com.rivers.toba.data.AccountDB;
+import com.rivers.toba.data.UserDB;
+import com.rivers.toba.user.Account;
 import com.rivers.toba.user.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,11 +66,24 @@ public class NewCustomerServlet extends HttpServlet {
         }else{
             //Create user object with data from form
             User user = new User(firstName, lastName, phone, address, city, state, zipCode, email, username, password);
-        
+           
+            //create checking and savings accts for user
+            Account savings = new Account("savings", 25.00f, user);
+            Account checking = new Account("checking", 0.00f, user);
+            
+            //add user to DB
+            UserDB.insert(user);
+            
+            //add accounts to DB
+            AccountDB.insert(savings);
+            AccountDB.insert(checking);
+            
             //Request session and add user to it
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-           
+            session.setAttribute("checking", checking);
+            session.setAttribute("savings", savings);
+            
             message = "";
             url = "/success.jsp";
         }  

@@ -5,12 +5,19 @@
  */
 package com.rivers.toba;
 
+import com.rivers.toba.data.AccountDB;
+import com.rivers.toba.data.TransactionDB;
+import com.rivers.toba.user.Account;
+import com.rivers.toba.user.Transactions;
+import com.rivers.toba.user.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,66 +25,67 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TransactionServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TransactionServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TransactionServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String url;
+        
+        //Pull data from form
+        String action = request.getParameter("action");
+        String fromAcct = request.getParameter("fromAcct");
+        String toAcct = request.getParameter("toAcct");
+        float transferAmt = Float.parseFloat(request.getParameter("transferAmt"));
+        
+        HttpSession session = request.getSession();           
+        User user = (User)session.getAttribute("user");
+        
+        //Pull accounts from DB
+        List<Account> accounts = AccountDB.selectAccts(user.getUserId());
+        
+        Account savings = accounts.get(0);
+        Account checking = accounts.get(1);
+        
+        //credit or debit accounts accordingly
+        if(fromAcct.equals("checking")){
+            checking.debit(transferAmt);
+            savings.credit(transferAmt);
+            Transactions transaction = new Transactions(checking.getAccountId(), transferAmt);
+            TransactionDB.insert(transaction);
+        }else{
+            checking.credit(transferAmt);
+            savings.debit(transferAmt);
+            Transactions transaction = new Transactions(savings.getAccountId(), transferAmt);
+            TransactionDB.insert(transaction);
+        }
+        
+//TODO: update account activity page to display all transactions
+        List<Transactions> trans = checking.getTransactions();
+        List<Transactions> trans2 = savings.getTransactions();
+        
+        
+        AccountDB.update(checking);
+        AccountDB.update(savings);
+        
+        session.setAttribute("checking", checking);
+        session.setAttribute("savings", savings);
+        
+        url = "/account_activity.jsp";
+       
+         //Send user to appropriate page
+        getServletContext()
+                    .getRequestDispatcher(url)
+                    .forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    
     @Override
     public String getServletInfo() {
         return "Short description";

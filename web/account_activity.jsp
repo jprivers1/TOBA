@@ -14,7 +14,22 @@
         <c:if test="${sessionScope.user == null}">
             <p>Not Logged In</p>
         </c:if>
-        <section>
+        
             <p>Account Activity</p>
-        </section>
+            
+            <c:forEach var="item" items="${trans}">
+                <tr>
+                    <td>${transactions.transactionId}</td>
+                    <td>${transactions.accountId}</td>
+                    <td>${transactions.amount}</td>
+                </tr>
+            </c:forEach>
+                <c:forEach var="item" items="${trans2}">
+                <tr>
+                    <td>${transactions.transactionId}</td>
+                    <td>${transactions.accountId}</td>
+                    <td>${transactions.amount}</td>
+                </tr>
+            </c:forEach>
+        
             <c:import url="/includes/footer.jsp"/>

@@ -5,6 +5,7 @@
  */
 package com.rivers.toba;
 
+import com.rivers.toba.data.UserDB;
 import com.rivers.toba.user.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +43,7 @@ import javax.servlet.http.HttpSession;
         user.setPassword(newPassword);
         //session.removeAttribute("user");
        // session.setAttribute("user", user);
-        
+        UserDB.update(user);
         url = "/account_activity.jsp";
         
         getServletContext()
