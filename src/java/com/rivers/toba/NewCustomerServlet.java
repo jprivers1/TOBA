@@ -9,8 +9,10 @@ import com.rivers.toba.data.AccountDB;
 import com.rivers.toba.data.UserDB;
 import com.rivers.toba.user.Account;
 import com.rivers.toba.user.User;
+import com.rivers.toba.utils.PasswordUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,6 +57,8 @@ public class NewCustomerServlet extends HttpServlet {
         String username = lastName + zipCode;    
         String password = "welcome1";
         
+       
+        
         
         //Check if all fields on form are filled out
         if(firstName == null || lastName == null || phone == null || address == null || city == null || state == null || zipCode == null || email == null
@@ -64,8 +68,15 @@ public class NewCustomerServlet extends HttpServlet {
                 url = "/new_customer.jsp";
             
         }else{
+            String hashedAndSaltedPassword = null;
+            try{
+            hashedAndSaltedPassword = PasswordUtil.hashAndSaltPassword(password);
+            }catch(NoSuchAlgorithmException e){
+           System.out.println(e);
+            }
+             
             //Create user object with data from form
-            User user = new User(firstName, lastName, phone, address, city, state, zipCode, email, username, password);
+            User user = new User(firstName, lastName, phone, address, city, state, zipCode, email, username, hashedAndSaltedPassword);
            
             //create checking and savings accts for user
             Account savings = new Account("savings", 25.00f, user);
